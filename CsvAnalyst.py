@@ -13,7 +13,6 @@ window = tk.Tk()
 window.geometry("550x550")
 window.title("Программа анализа .csv файлов")
 
-
 # Создание меток вывода
 
 label_00 = tk.Label(text = "Файл:")
@@ -36,7 +35,7 @@ label_21.grid(row=2, column=1, sticky="w")
 
 # Создание текстового вывода с прокруткой
 
-output_text = st(height = 22, width = 50)
+output_text = st(height = 22, width = 45)
 output_text.grid(row=3, column=1, padx=10, pady=10, sticky="w")
 
 # Диалог открытия файла
@@ -65,7 +64,6 @@ def get_column(df, column_ix):
         lst.append(df.iat[i,column_ix])
     return lst
     
-
 # Обработчик нажатия кнопки
 
 def process_button():
