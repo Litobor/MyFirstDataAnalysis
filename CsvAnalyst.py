@@ -118,6 +118,34 @@ def list_meet_date_am_pm(fields_list):
     # Не набралось нужного количества совпадений
     return False, ratio
 
+# Если в этом поле эл. почта, пусть вернет True
+
+def meet_email(field):
+    checkfor = ['@']
+    for s in checkfor:
+        if s in str(field): # Нашлось!
+            return True
+    # Ничего не совпало
+    return False
+
+# Если в этом списке многие элементы содержат эл.адрес, пусть вернет True.
+    
+def list_meet_email(fields_list):
+    counter_total = 0
+    counter_meet = 0
+    for list_item in fields_list:
+        counter_total += 1
+        if meet_email(list_item):
+            counter_meet += 1
+    # Конец подсчета
+    ratio = counter_meet / counter_total 
+    if ratio > 0.5:
+        return True, ratio
+    # Не набралось нужного количества совпадений
+    return False, ratio
+
+
+
 # Пройти все стобцы
 
 def check_all_columns(df):
@@ -143,9 +171,18 @@ def check_all_columns(df):
                 + "%." + os.linesep + os.linesep)
             continue # Все нашли, можно идти к следующему столбцу
         
+        # Третий критерий
+        result3 = list_meet_email(lst)
+        if result3[0]:
+            output_text.insert(tk.END, "В столбце " + str(i+1)
+                + " предположительно содержится эл.почта" + os.linesep)
+            output_text.insert(tk.END, "Процент совпадений " + "{:.2f}".format(result3[1]*100)
+                + "%." + os.linesep + os.linesep)
+            continue # Все нашли, можно идти к следующему столбцу
+        
         # Соответствия критериям не найдено
         output_text.insert(tk.END, "Предположений для столбца " + str(i+1)
-            + " не найденою" + os.linesep + os.linesep)
+            + " не найдено." + os.linesep + os.linesep)
 
 # Обработчик нажатия кнопки
 
